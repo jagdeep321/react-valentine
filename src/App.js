@@ -15,15 +15,15 @@ function App() {
 
   const photos = ["/akash1.jpg", "/akash2.jpg", "/akash3.jpg", "/akash4.jpg", "/akash5.jpg"];
 
-  // Slideshow
+  // ✅ Slideshow useEffect with correct dependency
   useEffect(() => {
     const interval = setInterval(() => {
       setSlide((prev) => (prev + 1) % photos.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [photos.length]); // photos.length dependency added
 
-  // Countdown Days Together
+  // ✅ Countdown Days Together
   useEffect(() => {
     const startDate = new Date("2018-12-11");
     const interval = setInterval(() => {
@@ -84,7 +84,13 @@ function App() {
       <div className="timer">{timeTogether}</div>
 
       {!open ? (
-        <button className="btn" onClick={() => { setOpen(true); playClip(); }}>
+        <button
+          className="btn"
+          onClick={() => {
+            setOpen(true);
+            playClip();
+          }}
+        >
           🎁 Open My Heart
         </button>
       ) : (
