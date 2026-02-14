@@ -1,213 +1,116 @@
+/* GLOBAL STYLING */
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #ff0844, #ffb199);
+  background: linear-gradient(-45deg, #ff0844, #ffb199, #ff4e50, #f9d423);
+  background-size: 400% 400%;
+  animation: gradientSky 12s ease infinite;
   color: white;
   text-align: center;
   overflow-x: hidden;
 }
 
-.container {
-  padding: 20px;
-  position: relative;
+@keyframes gradientSky {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Title Glow */
-.glow-title {
-  font-size: 40px;
-  margin-bottom: 10px;
-  animation: glow 2s infinite alternate;
-}
+.container { position: relative; min-height: 100vh; }
+.content { position: relative; z-index: 10; padding: 20px; }
 
-@keyframes glow {
-  from { text-shadow: 0 0 10px pink; }
-  to { text-shadow: 0 0 25px red; }
-}
-
-/* Name Glow */
-.name-glow {
-  font-size: 36px;
-  margin-bottom: 15px;
-  animation: glow 1.5s infinite alternate;
-}
-
-.timer {
-  margin-bottom: 25px;
-  font-size: 18px;
-  color: yellow;
-}
-
-/* Buttons */
-.btn {
-  padding: 12px 25px;
-  margin: 15px;
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  cursor: pointer;
-  background: white;
-  color: #ff0844;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  transform: scale(1.1);
-  background: pink;
-  color: white;
-}
-
-/* Love Card */
-.card {
-  background: rgba(255,255,255,0.2);
-  padding: 25px;
-  border-radius: 25px;
-  backdrop-filter: blur(15px);
-  margin: 20px auto;
-  max-width: 90%;
-  box-shadow: 0 0 20px pink;
-}
-
-.romantic-text {
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-/* SHAYARI */
-.shayari-container {
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.shayari {
-  font-size: 18px;
-  padding: 18px;
-  border-radius: 25px;
-  backdrop-filter: blur(12px);
-  animation: fadeIn 2s ease-in-out;
-}
-
-.moon-shayari {
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 20px #ffffff;
-}
-
-.heart-shayari {
-  background: rgba(255, 192, 203, 0.2);
-  box-shadow: 0 0 25px red;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Slideshow */
-.slideshow img {
-  width: 90%;
-  max-width: 350px;
-  border-radius: 20px;
-  margin-top: 20px;
-  box-shadow: 0 0 25px white;
-  transition: 1s;
-}
-
-/* Proposal */
-.proposal {
-  position: relative;
-  margin-top: 30px;
-}
-
-.yes {
-  background: green;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 25px;
-  margin: 10px;
-}
-
-.no {
-  background: red;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 25px;
-  transition: 0.3s;
-}
-
-/* Floating Hearts */
-.hearts::before {
-  content: "💖 💕 💗 💓 💞 ❤️ 💘 💝";
+/* STARS BACKGROUND */
+.stars {
   position: fixed;
   width: 100%;
-  font-size: 28px;
-  animation: float 12s linear infinite;
-}
-
-@keyframes float {
-  0% { top: 100%; opacity: 0; }
-  50% { opacity: 1; }
-  100% { top: -10%; opacity: 0; }
-}
-
-/* Floating hearts for Yes button */
-.fire-heart {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  font-size: 30px;
-  animation: heartFall 4s linear forwards;
+  height: 100%;
   pointer-events: none;
+  z-index: 1;
+  background: transparent;
+  box-shadow:
+    50px 100px white,
+    200px 300px white,
+    400px 150px white,
+    600px 400px white,
+    800px 200px white,
+    1000px 250px white,
+    1200px 500px white;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }
+
+/* TITLES */
+.glow-title { font-size: 40px; animation: glow 2s infinite alternate; }
+.name-glow { font-size: 36px; animation: glow 1.5s infinite alternate; }
+@keyframes glow { from { text-shadow:0 0 10px pink; } to { text-shadow:0 0 25px red; } }
+.timer { margin-bottom:20px; color: yellow; font-weight:bold; }
+
+/* BUTTONS */
+.btn, .yes, .no {
+  border:none; cursor:pointer; font-weight:bold; transition:0.3s;
+}
+.btn { padding:12px 25px; margin:15px; border-radius:30px; background:white; color:#ff0844; }
+.btn:hover { transform:scale(1.1); background:pink; color:white; }
+.yes { background:green; color:white; padding:12px 25px; border-radius:25px; margin:10px; }
+.no { background:red; color:white; padding:12px 25px; border-radius:25px; margin:10px; transition:0.3s; }
+
+/* 3D HEART */
+.heart-3d {
+  width:100px;height:100px;margin:30px auto;background:red;transform:rotate(-45deg);
+  animation: rotateHeart 6s linear infinite; position:relative;
+}
+.heart-3d::before,.heart-3d::after {
+  content:""; width:100px; height:100px; background:red; border-radius:50%; position:absolute;
+}
+.heart-3d::before { top:-50px; left:0; }
+.heart-3d::after { left:50px; top:0; }
+@keyframes rotateHeart { 0% { transform:rotate(-45deg) rotateY(0deg);} 100%{transform:rotate(-45deg) rotateY(360deg);} }
+
+/* ROMANTIC CARD */
+.card { background: rgba(255,255,255,0.2); padding:25px; border-radius:25px; backdrop-filter:blur(15px); margin:20px auto; max-width:90%; box-shadow:0 0 20px pink; }
+.romantic-text { font-size:18px; line-height:1.6; }
+
+/* SHAYARI */
+.shayari-container { margin-top:25px; display:flex; flex-direction:column; gap:20px; }
+.shayari { font-size:18px; padding:18px; border-radius:25px; backdrop-filter:blur(12px); animation: fadeIn 2s ease-in-out; }
+.moon-shayari { background: rgba(255,255,255,0.15); box-shadow:0 0 20px #fff; }
+.heart-shayari { background: rgba(255,192,203,0.2); box-shadow:0 0 25px red; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+/* SLIDESHOW */
+.slideshow img { width:90%; max-width:350px; border-radius:20px; margin-top:20px; box-shadow:0 0 25px white; transition:1s; }
+
+/* PROPOSAL */
+.proposal { margin-top:30px; }
+
+/* RING */
+.ring-container { margin-top:30px; }
+.ring { font-size:80px; animation: ringPop 2s ease forwards, sparkle 1.5s infinite alternate; }
+@keyframes ringPop { 0%{transform:scale(0);opacity:0;} 50%{transform:scale(1.3);opacity:1;} 100%{transform:scale(1);} }
+@keyframes sparkle { from{ text-shadow:0 0 10px white;} to{ text-shadow:0 0 25px gold;} }
+
+/* FLOATING HEARTS & POPUP TEXT */
+.fire-heart { position:fixed; top:0; left:50%; font-size:30px; animation:heartFall 4s linear forwards; pointer-events:none; }
+@keyframes heartFall { 0%{transform:translateX(0) translateY(0) scale(1); opacity:1;} 100%{transform:translateX(-50px) translateY(500px) scale(1.2); opacity:0;} }
+
+.popup-text { position:fixed; top:40%; left:50%; transform:translate(-50%,-50%); font-size:32px; color:#ff007f; font-weight:bold; text-shadow:0 0 10px pink,0 0 20px red; animation: popupFade 4s forwards; }
+@keyframes popupFade { 0%{opacity:0; transform:translate(-50%,-50%) scale(0.8);} 20%{opacity:1; transform:translate(-50%,-50%) scale(1.1);} 100%{opacity:0; transform:translate(-50%,-50%) scale(1.2);} }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .glow-title{font-size:28px;} .name-glow{font-size:22px;} .timer{font-size:14px;}
+  .heart-3d{width:70px;height:70px;} .heart-3d::before,.heart-3d::after{width:70px;height:70px;}
+  .heart-3d::before{top:-35px;} .heart-3d::after{left:35px;}
+  .romantic-text,.shayari{font-size:15px;}
+  .slideshow img{width:95%; max-width:260px;}
+  .btn,.yes,.no{padding:10px 18px; font-size:14px;}
+  .ring{font-size:55px;}
 }
 
-@keyframes heartFall {
-  0% { transform: translateX(0) translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateX(-50px) translateY(500px) scale(1.2); opacity: 0; }
-}
-
-/* Popup Text */
-.popup-text {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 32px;
-  color: #ff007f;
-  font-weight: bold;
-  text-shadow: 0 0 10px pink, 0 0 20px red;
-  animation: popupFade 4s forwards;
-}
-
-@keyframes popupFade {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
-}
-
-/* Mobile Responsive */
-@media (max-width: 480px) {
-  .glow-title {
-    font-size: 28px;
-  }
-  .name-glow {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-  .timer {
-    font-size: 16px;
-    margin-bottom: 15px;
-  }
-  .romantic-text, .shayari {
-    font-size: 16px;
-  }
-  .btn {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
-  .slideshow img {
-    width: 95%;
-    max-width: 250px;
-  }
+@media (max-width: 400px) {
+  .glow-title{font-size:22px;} .name-glow{font-size:18px;}
+  .romantic-text,.shayari{font-size:13px;}
+  .heart-3d{width:60px;height:60px;} .heart-3d::before,.heart-3d::after{width:60px;height:60px;}
+  .heart-3d::before{top:-30px;} .heart-3d::after{left:30px;}
+  .ring{font-size:45px;}
 }
