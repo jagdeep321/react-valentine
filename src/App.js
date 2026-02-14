@@ -11,11 +11,11 @@ function App() {
   const [noPosition, setNoPosition] = useState({});
   const [timeTogether, setTimeTogether] = useState("");
   const [showRing, setShowRing] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // NEW: popup state
-  const [showHearts, setShowHearts] = useState(false); // NEW: floating hearts
+  const [showPopup, setShowPopup] = useState(false);
+  const [showHearts, setShowHearts] = useState(false);
 
-  const clipRef = useRef(null);          // Initial music
-  const proposalAudioRef = useRef(null); // Proposal music
+  const clipRef = useRef(null);
+  const proposalAudioRef = useRef(null);
 
   const photos = [
     "/akash1.jpg",
@@ -25,7 +25,7 @@ function App() {
     "/akash5.jpg",
   ];
 
-  // Slideshow
+  // Slideshow automatic
   useEffect(() => {
     const interval = setInterval(() => {
       setSlide((prev) => (prev + 1) % photos.length);
@@ -33,7 +33,7 @@ function App() {
     return () => clearInterval(interval);
   }, [photos.length]);
 
-  // Days Counter
+  // Days counter
   useEffect(() => {
     const startDate = new Date("2018-12-11");
     const interval = setInterval(() => {
@@ -59,7 +59,6 @@ function App() {
     setShowPopup(true);
     setShowHearts(true);
 
-    // Confetti for 8 seconds
     const duration = 8 * 1000;
     const end = Date.now() + duration;
     const interval = setInterval(() => {
@@ -72,10 +71,7 @@ function App() {
       if (Date.now() > end) clearInterval(interval);
     }, 400);
 
-    // Hide popup after 4s
     setTimeout(() => setShowPopup(false), 4000);
-
-    // Hide hearts after 5s
     setTimeout(() => setShowHearts(false), 5000);
   };
 
@@ -89,7 +85,6 @@ function App() {
     <div className="container">
       <div className="stars"></div>
 
-      {/* Music */}
       <audio ref={clipRef} src="/clip1.mp3" />
       <audio ref={proposalAudioRef} src="/clip2.mp3" />
 
@@ -99,21 +94,13 @@ function App() {
         <div className="timer">{timeTogether}</div>
 
         {!open ? (
-          <button
-            className="btn"
-            onClick={() => {
-              setOpen(true);
-              playClip();
-            }}
-          >
+          <button className="btn" onClick={() => { setOpen(true); playClip(); }}>
             🎁 Open My Heart
           </button>
         ) : (
           <>
-            {/* 3D Heart */}
             <div className="heart-3d"></div>
 
-            {/* Romantic Lines */}
             <div className="card">
               <p className="romantic-text">
                 You are not just my love… <br />
@@ -126,7 +113,6 @@ function App() {
               </p>
             </div>
 
-            {/* SHAYARI */}
             <div className="shayari-container">
               <div className="shayari moon-shayari">
                 <p>
@@ -136,7 +122,6 @@ function App() {
                   ਗੁਲਾਬਾਂ ਵਰਗਾ ਉਹ… 🌹♥️
                 </p>
               </div>
-
               <div className="shayari heart-shayari">
                 <p>
                   ਧੜਕਣਾਂ ਚ ਵੱਸਦਾ ਏ,<br />
@@ -147,37 +132,31 @@ function App() {
               </div>
             </div>
 
-            {/* Slideshow */}
             <div className="slideshow">
-              <img src={photos[slide]} alt="memory" />
+              <img src={photos[slide]} alt="memory" className="slide-image" />
+              <div className="memory-cards">
+                {photos.map((photo, idx) => (
+                  <img
+                    key={idx}
+                    src={photo}
+                    alt="memory-card"
+                    className={`memory-card ${idx === slide ? "active-card" : ""}`}
+                    style={{ transform: `rotate(${(idx - slide) * 5}deg)` }}
+                    onClick={() => setSlide(idx)}
+                  />
+                ))}
+              </div>
             </div>
 
             {!proposal ? (
-              <button
-                className="btn"
-                onClick={() => {
-                  setProposal(true);
-                  playProposalSong();
-                }}
-              >
+              <button className="btn" onClick={() => { setProposal(true); playProposalSong(); }}>
                 💍 Click For Proposal
               </button>
             ) : (
               <div className="proposal">
                 <h2>Will You Be Mine Forever? ❤️</h2>
-
-                <button className="yes" onClick={handleYesClick}>
-                  Yes 💖
-                </button>
-
-                <button
-                  className="no"
-                  onMouseEnter={moveNoButton}
-                  style={noPosition}
-                >
-                  No 😜
-                </button>
-
+                <button className="yes" onClick={handleYesClick}>Yes 💖</button>
+                <button className="no" onMouseEnter={moveNoButton} style={noPosition}>No 😜</button>
                 {showRing && (
                   <div className="ring-container">
                     <div className="ring">💍</div>
@@ -185,14 +164,16 @@ function App() {
                 )}
               </div>
             )}
+
+            <button className="btn" onClick={() => setShowPopup(true)}>🎉 Surprise Me!</button>
           </>
         )}
 
-        {/* Popup Text */}
         {showPopup && <div className="popup-text">I Love You Forever ❤️</div>}
-
-        {/* Floating Hearts */}
-        {showHearts && <div className="fire-heart">💖 ❤️ 💕</div>}
+        {showHearts && Array.from({ length: 10 }).map((_, i) => (
+          <div key={i} className="fire-heart" style={{ left: `${Math.random() * 90}%`, animationDelay: `${i * 0.2}s` }}>💖</div>
+        ))}
+        {showRing && <div className="neon-text">Forever Yours 💕</div>}
       </div>
     </div>
   );
